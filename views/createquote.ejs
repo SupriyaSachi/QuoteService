@@ -68,7 +68,7 @@
         {
             var valid = true;
             var regex =  /^[a-zA-Z0-9.]+$/;
-	    var sharesregex =  /^[a-zA-Z0-9]+$/;
+            var sharesregex =  /^[a-zA-Z0-9]+$/;
           $('[required]').each(function() {
             if ($(this).is(':invalid') || !$(this).val()) valid = false;
           })
@@ -78,21 +78,24 @@
                 var symbolip = document.getElementById("symbol").value;
                 if (symbolip.match(regex))
                 {
-			valid = true;
+					valid = true;
                 }
                 else{
-		  valid = false;
+				  valid = false;
                   alert("Incorrect format in symbol");
                 }
+                if (valid)
+                {
                 var sharesTradedip = document.getElementById("sharesTraded").value;
-		if (sharesTradedip.match(sharesregex))
+                if (sharesTradedip.match(sharesregex))
                 {
                   valid = true;
                 }
                 else{
-		  valid = false;
+				           valid = false;
                   alert("Incorrect format in Shares Traded");
                 }
+              }
                 var priceTradedip = document.getElementById("priceTraded").value;
                 var changeDirectionip = document.getElementById("changeDirection").value;
                 var changeAmountip = document.getElementById("changeAmount").value;

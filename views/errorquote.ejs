@@ -92,7 +92,7 @@
                     // print JSON response
                     if (xhr.status >= 200 && xhr.status < 300) {
 
-                        alert("Query successfull");
+                     //   alert("Query successfull");
                        window.location.href = "/list-quote";
                     }
 					else
@@ -127,6 +127,7 @@
       <div class="bs-create">
       <div class="form-group row"></div>
       <form onsubmit="processdata()">
+        <div class="container">
         <div class="form-group row">
             
             <div class="col-md-2">
@@ -145,11 +146,12 @@
             <div class="form-group row">
               <div class="col-md-3">
                 <label for="dummy" ></label>
-              <input type="submit" class="btn btn-success" value="accept"/>
+              <input type="submit" class="btn btn-success" value="Go"/>
             </div>
               </div>      
         </div>
-        <h2> No records found!</h2>
+        <h3> No records found!</h3>
+      </div>
       </form>
        </div>
       

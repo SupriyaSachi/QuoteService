@@ -147,11 +147,11 @@
 
         $("#inputFilter").on("keyup", function() {
       var inputValue = $(this).val().toLowerCase();
-      $("#wavTable tr").filter(function() {
+      $("#quoteTable tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(inputValue) > -1)
       });
   });
-	  oTable = $('#wavTable').DataTable({
+	  oTable = $('#quoteTable').DataTable({
         stateSave: true,
 		"lengthMenu": [10, 25, 50, 100, 200, 500, 1000, 2000],
 		"order":[],
@@ -159,6 +159,7 @@
 		"scrollCollapse":true
     });
     })
+    
 
 	document.addEventListener("DOMContentLoaded", function(event) { 
       var TheInnerHTML ="";
@@ -173,6 +174,11 @@
        }
        TheInnerHTML += "</tr>";
     }
+
+  /*  for (var i = 0; i < result.rowCount; i++)
+    {
+      TheInnerHTML += "<tr><td>"+result.rows[i].timestamp+"</td><td>"+result.rows[i].symbol+"</td><td>"+result.rows[i].sharestraded+"</td><td>"+result.rows[i].pricetraded+"</td><td>"+result.rows[i].changedirection+"</td><td>"+result.rows[i].changeamount+"</td><tr>";
+    }*/
 
 	document.getElementById("TheBody").innerHTML = TheInnerHTML;	
 	document.getElementById("TheBody").style.fontFamily = "sans-serif";
@@ -205,10 +211,10 @@ function processdata(ctl)
                     // print JSON response
                     if (xhr.status >= 200 && xhr.status < 300) {
 
-                        alert("Query successfull");
+                       // alert("Query successfull");
                        window.location.href = "/list-quote";
                     }
-					else
+				          	else
                     {
                         alert("Error in while executing query");
                     }
@@ -240,6 +246,7 @@ function processdata(ctl)
       <div class="bs-create">
       <div class="form-group row"></div>
       <form onsubmit="processdata()">
+        <div class="container">
         <div class="form-group row">
             
             <div class="col-md-2">
@@ -258,18 +265,18 @@ function processdata(ctl)
             <div class="form-group row">
               <div class="col-md-3">
                 <label for="dummy" ></label>
-              <input type="submit" class="btn btn-success" value="accept"/>
+              <input type="submit" class="btn btn-success" value="Go"/>
             </div>
               </div>      
         </div>
-        
+      </div>
       </form>
        </div>
 
     </br>
 </br>
 </br>
-
+<div class="container">
 <table id="quoteTable" class="table table-hover table-responsive" cellspacing="0" width="100%">
 <thead> 
 <tr>
@@ -295,6 +302,7 @@ function processdata(ctl)
   </tr>
 </tfoot>
 </table>
+</div>
       </div>
     
   </body>
