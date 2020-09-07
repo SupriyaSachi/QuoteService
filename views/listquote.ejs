@@ -250,14 +250,14 @@ function processdata(ctl)
             
             <div class="col-md-2">
               <label for="recnum">Number of Records</label>
-                <input type="text" class="form-control" id="recnum" data-toggle="tooltip" 
+                <input type="number" class="form-control" id="recnum" min='1' data-toggle="tooltip" 
                       data-placement="right" title="Enter the number of records" onkeyup="this.value = this.value.toUpperCase();" required>
                       
             </div>
             <div class="col-md-2">
                 <label for="timemin" >Last data in minutes</label>
-                <input type="text" class="form-control" id="timemin" data-toggle="tooltip" 
-                      data-placement="right" title="Enter the time frame in minutes" required>
+                <input type="number" class="form-control" id="timemin" min='1' data-toggle="tooltip" 
+                      data-placement="right" title="Enter the time frame in minutes" required> 
                       
             </div>
       

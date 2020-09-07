@@ -134,14 +134,12 @@
             
             <div class="col-md-2">
               <label for="recnum">Number of Records</label>
-                <input type="number" class="form-control" id="recnum" data-toggle="tooltip" value='5'
-                      data-placement="right" title="Enter the number of records" onkeyup="this.value = this.value.toUpperCase();" required>
+                <input type="number" class="form-control" id="recnum" data-toggle="tooltip" value='5' min='0' data-placement="right" title="Enter the number of records" onkeyup="this.value = this.value.toUpperCase();" required>
                       
             </div>
             <div class="col-md-2">
                 <label for="timemin" >Last data in minutes</label>
-                <input type="number" class="form-control" id="timemin" data-toggle="tooltip" value='10'
-                      data-placement="right" title="Enter the time frame in minutes" required>
+                <input type="number" class="form-control" id="timemin" data-toggle="tooltip" value='10' min='0' data-placement="right" title="Enter the time frame in minutes" required>
                       
             </div>
       
