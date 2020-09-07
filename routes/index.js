@@ -4,14 +4,15 @@ var router = express.Router();
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-const { Client, Query } = require('pg')
+const { Client, Query } = require('pg');
 const url = require('url');
+var config = require('./../config');
 
-var username = "postgres" // sandbox username
-var password = "postgres" // read only privileges on our table
-var host = "localhost:5432"
-var database = "TickerQuote" // database name
-var conString = "postgres://"+username+":"+password+"@"+host+"/"+database; // Your Database Connection
+//var username = "postgres" // sandbox username
+//var password = "postgres" // read only privileges on our table
+//var host = "localhost:5432"
+//var database = "TickerQuote" // database name
+//var conString = "postgres://"+username+":"+password+"@"+host+"/"+database; // Your Database Connection
 var timemin = 10;
 var recnum = 5;
 
@@ -34,8 +35,7 @@ router.get('/view-quote', function(req, res) {
 router.get('/list-quote', function(req, res) {
   
   var selquery = "SELECT * FROM quote WHERE \"timestamp\" >= NOW() - INTERVAL \'"+timemin+"\' MINUTE LIMIT "+recnum;
-   console.log(selquery);
-   var client = new Client(conString);
+   var client = new Client(config.postgresurl);
    client.connect(); 
    client.query(selquery, function(err, result, fields) {
      if (err) throw err;
@@ -95,7 +95,7 @@ router.post('/submit-create-quote', function(req, res, next) {
 
   var insertsql = "INSERT INTO public.quote(timestamp, symbol, sharestraded, pricetraded, changedirection, changeamount) VALUES ("+"'"+timestamp+"'"+", "+"'"+symbol+"'"+", "+"'"+sharestraded+"'"+", "+pricetraded+", "+"'"+changedirection+"'"+", "+"'"+changeamount+"'"+")";
 	console.log(insertsql);
-	var client = new Client(conString); // Setup our Postgres Client
+	var client = new Client(config.postgresurl); // Setup our Postgres Client
   client.connect();
 	client.query(insertsql, function (err, result) {  
 	if (err) throw err;  
