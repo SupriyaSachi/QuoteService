@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QuoteService</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+  <style>
+        .bs-create{
+            margin: 10px;    
+            padding-left: 10px;
+            overflow: hidden;    
+        }
+
+        .submit-progress-bg {
+            background-color: whitesmoke;
+            opacity: .5;
+        }
+
+        .submit-progress i {
+             margin-right: 0.5em;
+        }
+
+        .submit-progress {
+            padding-top: 2em;
+            width: 92%;;
+            margin-left: 2.5em;
+
+            -webkit-border-radius: 0.4em;
+            -moz-border-radius: 0.4em;
+            border-radius: 0.4em;
+            box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+            -webkit-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+            -moz-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+        }
+
+        card {
+        /* Add shadows to create the "card" effect */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            height: 1000px;
+            overflow: hidden;
+        }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        #myAlert {
+            display: none;
+        }
+
+        .bs-create{
+            margin: 10px;    
+            padding-left: 2px;
+            overflow: hidden;    
+        }
+
+
+    </style>
+  <body>
+    <script>
+        function processdata(ctl)
+        {
+            var valid = true;
+        
+          $('[required]').each(function() {
+            if ($(this).is(':invalid') || !$(this).val()) valid = false;
+          })
+            if (valid)
+            {
+              
+                var recnum = document.getElementById("recnum").value;
+                var timemin = document.getElementById("timemin").value;
+
+                var query = {
+                   value1: recnum,
+                   value2: timemin,
+         }
+         
+               // window.location.href = "/list-quote/?numofrec="+recnum+"&interval="+timemin;
+               var xhr = new window.XMLHttpRequest()
+                    xhr.onload = () => {
+
+                    // print JSON response
+                    if (xhr.status >= 200 && xhr.status < 300) {
+
+                        alert("Query successfull");
+                       window.location.href = "/list-quote";
+                    }
+					else
+                    {
+                        alert("Error in while executing query");
+                    }
+                }; 
+                xhr.open('POST', '/list-quote', true)
+                xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                xhr.send(JSON.stringify(query))
+
+            }
+        }
+        
+
+    </script>
+    <div class="viewheader">
+      <div class="wrapper">
+        <nav class="navbar bg-dark navbar-dark">
+          <ul class="nav-area">
+            <li class="nav-area">
+              <a  href="/view-quote" class="nav-link active" role="button" >View Quote</a>
+            </li> &nbsp;
+            <li class="nav-area">
+              <a href="/create-quote" class="nav-link" role="button" >Create Quote</a>
+            </li> &nbsp;
+            <li class="nav-area">
+              <a  href="/" class="nav-link" role="button" >Home</a>
+            </li>
+          </ul> 
+        </nav>
+      </div>
+      <div class="bs-create">
+      <div class="form-group row"></div>
+      <form onsubmit="processdata()">
+        <div class="form-group row">
+            
+            <div class="col-md-2">
+              <label for="recnum">Number of Records</label>
+                <input type="number" class="form-control" id="recnum" data-toggle="tooltip" value='5'
+                      data-placement="right" title="Enter the number of records" onkeyup="this.value = this.value.toUpperCase();" required>
+                      
+            </div>
+            <div class="col-md-2">
+                <label for="timemin" >Last data in minutes</label>
+                <input type="number" class="form-control" id="timemin" data-toggle="tooltip" value='10'
+                      data-placement="right" title="Enter the time frame in minutes" required>
+                      
+            </div>
+      
+            <div class="form-group row">
+              <div class="col-md-3">
+                <label for="dummy" ></label>
+              <input type="submit" class="btn btn-success" value="accept"/>
+            </div>
+              </div>      
+        </div>
+        
+      </form>
+       </div>
+      </div>
+    
+  </body>
+</html>
+

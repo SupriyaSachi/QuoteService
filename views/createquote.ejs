@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QuoteService</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+  <style>
+        .bs-create{
+            margin: 10px;    
+            padding-left: 2px;
+            overflow: hidden;    
+        }
+
+        .submit-progress-bg {
+            background-color: whitesmoke;
+            opacity: .5;
+        }
+
+        .submit-progress i {
+             margin-right: 0.5em;
+        }
+
+        .submit-progress {
+            padding-top: 2em;
+            width: 92%;;
+            margin-left: 2.5em;
+
+            -webkit-border-radius: 0.4em;
+            -moz-border-radius: 0.4em;
+            border-radius: 0.4em;
+            box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+            -webkit-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+            -moz-box-shadow: 0.4em 0.4em rgba(0,0,0,0.6);
+        }
+
+        card {
+        /* Add shadows to create the "card" effect */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            height: 1000px;
+            overflow: hidden;
+        }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        #myAlert {
+            display: none;
+        }
+    </style>
+  <body>
+    <script>
+        $(document).ready(function() {
+            $('.mdb-select').materialSelect();
+        });
+
+        function processdata(ctl)
+        {
+            var valid = true;
+            var regex =  /^[a-zA-Z0-9.]+$/;
+          $('[required]').each(function() {
+            if ($(this).is(':invalid') || !$(this).val()) valid = false;
+          })
+          
+          if (valid)
+         {
+                var symbolip = document.getElementById("symbol").value;
+                if (symbolip.match(regex))
+                {
+					valid = true;
+                }
+                else{
+				  valid = false;
+                  alert("Incorrect format in symbol");
+                }
+                var sharesTradedip = document.getElementById("sharesTraded").value;
+                var priceTradedip = document.getElementById("priceTraded").value;
+                var changeDirectionip = document.getElementById("changeDirection").value;
+                var changeAmountip = document.getElementById("changeAmount").value;
+                var dateobj = new Date();
+
+                var newtimestamp = dateobj.toISOString(); 
+
+              //  var insertsql = "INSERT INTO public.quote(timestamp, symbol, sharesTraded, priceTraded, changeDirection, changeAmount) VALUES ("+newtimestamp+", "+symbolip+", "+sharesTradedip+", "+priceTradedip+", "+changeDirectionip+", "+changeAmountip+")";
+                var query = {
+                   value1: newtimestamp,
+                   value2: symbolip,
+                   value3: sharesTradedip,
+                   value4: priceTradedip,
+                   value5: changeDirectionip,
+                   value6: changeAmountip,
+				 }
+				 if (valid)
+				 {
+                    var xhr = new window.XMLHttpRequest()
+                    xhr.onload = () => {
+
+                    // print JSON response
+                    if (xhr.status >= 200 && xhr.status < 300) {
+
+                        alert("Quote created successfully");
+                       window.location.href = "/create-quote";
+                    }
+					else
+                    {
+                        alert("Error in while creating quote");
+                    }
+                }; 
+                xhr.open('POST', '/submit-create-quote', true)
+                xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+                xhr.send(JSON.stringify(query))
+				}
+            }
+        }
+
+    </script>
+    <div class="header">
+      <div class="wrapper">
+        <nav class="navbar bg-dark navbar-dark">
+          <ul class="nav-area">
+            <li class="nav-area">
+              <a  href="/view-quote" class="nav-link" role="button" >View Quote</a>
+            </li> &nbsp;
+            <li class="nav-area">
+              <a href="/create-quote" class="nav-link active" role="button" >Create Quote</a>
+            </li> &nbsp;
+            <li class="nav-area">
+              <a  href="/" class="nav-link" role="button" >Home</a>
+            </li>
+          </ul> 
+        </nav>
+        <div class="bs-create">
+            <div class="card mb-9 text-center" style="width: 120rem; height: 630px;background-color: ivory;">
+                <div class="card-body">
+                    <div id="myAlert" class="alert alert-warning">
+						<a href="#" class="close" data-dismiss="alert">&times;</a>
+						<strong>Error!</strong> no type selected or fill all the required fields!
+					</div>
+		        <form onsubmit="processdata()">
+                    <div class="form-group row">
+                        <label for="symbol" class="col-sm-1 col-form-label">Symbol</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="symbol" data-toggle="tooltip" 
+                                  data-placement="right" title="Enter the ticker value" onkeyup="this.value = this.value.toUpperCase();" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="sharestraded" class="col-sm-1 col-form-label">Shares Traded</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="sharesTraded" data-toggle="tooltip" 
+                                  data-placement="right" title="Enter the shares traded value" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="pricetraded" class="col-sm-1 col-form-label">Price Traded</label>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="priceTraded" data-toggle="tooltip" 
+                                  data-placement="right" title="Enter the price traded value" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        Change Direction
+                        <div class="col-sm-1">
+                            <label>
+                                <input  type="radio" id="changeDirection" value="up" checked>
+                                  up
+                            </label>
+                        </div>
+                        <div class="col-sm-1">
+                            <label>
+                                <input type="radio" id="changeDirection" value="down">
+                                  down
+                            </label>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group row">
+                        <label for="changeamount" class="col-sm-1 col-form-label">Change Amount</label>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="changeAmount" data-toggle="tooltip" 
+                                  data-placement="right" title="Enter the change amount value" required> </br></br>
+                                  <input type="submit" class="btn btn-success" value="accept"/>
+                        </div>
+                    </div>
+                   
+                </form>
+                </div>
+            </div>
+        </div>       
+      </div>
+    </div>
+  </body>
+</html>
+
