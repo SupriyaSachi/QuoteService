@@ -97,7 +97,18 @@
                 }
               }
                 var priceTradedip = document.getElementById("priceTraded").value;
-                var changeDirectionip = document.getElementById("changeDirection").value;
+                var radios = document.getElementsByName('changeDirection');
+                var changeDirectionip;
+
+                for (var i = 0, length = radios.length; i < length; i++) {
+                    if (radios[i].checked) {
+                     
+                        changeDirectionip = radios[i].value;
+
+                       
+                        break;
+                    }
+                }
                 var changeAmountip = document.getElementById("changeAmount").value;
                 var dateobj = new Date();
 
@@ -186,13 +197,13 @@
                       
 						<label for="changedirection" class="col-sm-2 col-form-label">  Change Direction</label>
                         <div class="col-sm-2">
-                            <label>
-                                <input  type="radio" id="changeDirection" value="up" checked>
+                            <label for="changeDirection">
+                                <input  type="radio" id="changeDirection" value="up" name="changeDirection" >
                                   up
                             </label> <label> &nbsp</label> <label> &nbsp</label> <label> &nbsp</label>
                         
-                            <label>
-                                <input type="radio" id="changeDirection" value="down">
+                            <label for="changeDirection">
+                                <input type="radio" id="changeDirection" name="changeDirection" value="down">
                                   down
                             </label>
                         </div>
